@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<EmailService>();
 Env.Load();
-builder.Services.AddDbContext<TopcvBeContext>(options =>
+builder.Services.AddDbContext<DBContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
@@ -97,7 +97,6 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
         listenOptions.UseHttps();
     });
 });
-builder.Services.AddHostedService<TopMaxPostDateUpdaterService>();
 builder.Services.AddScoped<IVnpay, Vnpay>();
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
